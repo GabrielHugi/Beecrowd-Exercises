@@ -4,6 +4,7 @@ made by Gabriel Loureiro Amorim Hugi
 */
 
 #include <stdio.h>
+#include <windows.h>
 
 // functions
 int partitionArray(int* array, int pivot, int min, int max) {
@@ -20,13 +21,27 @@ int partitionArray(int* array, int pivot, int min, int max) {
       posMax--;
     }
   }
+  for (int i = min; i < max; i++) {
+    array[i] = resArr[i-min];
+  }
+  printf("There: pivot %d : posmin %d : posmax %d\n", pivot, posMin, posMax);
+  printf("how the array be looking:\n");
+  for (int i = 0; i < 11; i++) {
+    printf("%d ", array[i]);
+  }
+  printf("\n");
+  Sleep(2000);
+  // the problem starts after this return and the next ones r done
   return posMin-1;
 }
 
 void quickSort(int* array, int len, int min, int max) {
-  if (len == 1) return;
+  printf("Here: len %d : min %d : max %d\n", len, min, max);
+  Sleep(2000);
+  if (len <= 1) return;
   int pivot = (int)(len/2); // middle-ish
   int info = partitionArray(array, pivot, min, max); // obscure name for fun, but explained in partitionArray()
+  printf("Return of be like: %d\n", info);
   // with just the position of where posMin ends we should about be able to determine the rest
   quickSort(array, len-info+1, 0, info); // smaller
   quickSort(array, len-info, info+1, max); // bigger
