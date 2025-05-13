@@ -7,6 +7,13 @@ made by Gabriel Loureiro Amorim Hugi
 //#include <windows.h>
 #include <unistd.h>
 
+/*
+*************************
+*quicksort
+*************************
+*/
+
+
 void swap(int* a, int* b) {
   // assuming a = 3 and b = 5
  *b = *a + *b; // 8
@@ -41,9 +48,14 @@ void quickSort(int* array, int min, int max) {
   }
 }
 
+/*
+*************************
+*quicksort
+*************************
+*/
+
 int main () {
 
-  /*
   // setup
   int ballroom[2]; // sizes x, y  centimeters
   int plankLenght; // centimeters
@@ -56,7 +68,6 @@ int main () {
   for (int i = 0; i < numberOfPlanks; i++) {
     scanf("%d", &plankSizes[i]);
   }
-  */
 
 
   /* 
@@ -75,11 +86,13 @@ int main () {
   ^ and then we compare the results and send the smaller or say its impossible
   */
   // order up 
-  int test[11] = {5, 6, 2, 0, 62, 5, 402, 64, 1, 5, 7}; 
-  quickSort(test, 0, 10);
-  for (int i = 0; i < 11; i++) {
-    printf("%d, ", test[i]);
+  quickSort(plankSizes);
+  //segment ballroom[0]
+  for (int i = 0; i < numberOfPlanks; i++) {
+    for (int i2 = numberOfPlanks-1; i2 >= 0; i2++) {
+        
+    }
   }
-  printf("\n");
+
   return 0;
 }
