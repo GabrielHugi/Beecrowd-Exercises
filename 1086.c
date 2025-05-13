@@ -33,10 +33,7 @@ int partition(int* array, int min, int max) {
     }
     if (posMinimum < posMaximum) swap(&array[posMinimum], &array[posMaximum]);    
   }
-  printf("\nmax is like: %d while pos max be like: %d\n",max, posMaximum);
-  printf("who was obliteratused %d %d\n", array[min], array[posMaximum]);
   if (min != posMaximum) swap(&array[min], &array[posMaximum]);
-  printf("who was obliteratus %d %d\n", array[min], array[posMaximum]);
   return posMaximum;
 }
 
@@ -86,11 +83,13 @@ int main () {
   ^ and then we compare the results and send the smaller or say its impossible
   */
   // order up 
-  quickSort(plankSizes);
+  quickSort(plankSizes, 0, numberOfPlanks-1);
   //segment ballroom[0]
-  for (int i = 0; i < numberOfPlanks; i++) {
+  // remember, can end at any point that the two planks be smaller than floor
+  for (int i = numberOfPlanks-1; i >= 0; i++) {
     for (int i2 = numberOfPlanks-1; i2 >= 0; i2++) {
-        
+        int res = plankSizes[i] + plankSizes[i2];
+        if (res < ballroom[0]);
     }
   }
 
