@@ -7,58 +7,38 @@ made by Gabriel Loureiro Amorim Hugi
 //#include <windows.h>
 #include <unistd.h>
 
-/*
-why my quicksort not working guys :( skull emoji
-*/
-
-
-// functions
-void partitionArray(int* storage, int* array, int pivot, int min, int max) {
-  // its return should be posMin-1 as for the end position of the smaller than array
-  printf("sh p:%d min:%d max:%d\n", pivot, min, max);
-
-  int posMin = min, posMax = max;
-  int resArr[max+1];
-  for (int i = min; i <= max; i++) {
-    printf("%d - ", array[i]);
-    if (array[i] <= pivot) {
-      resArr[posMin] = array[i];
-      posMin++;
-    }
-    else {
-      resArr[posMax] = array[i];
-      posMax--;
-    }
-  }
-  printf("\nend\n");
-  for (int i = min; i <= max; i++) {
-    array[i] = resArr[i];
-  }
-  printf("There: pivot %d : posmin %d : posmax %d\n", pivot, posMin, posMax);
-  printf("how the array be looking:\n");
-  for (int i = 0; i < 11; i++) {
-    printf("%d ", array[i]);
-  }
-  printf("\n");
-  sleep(1);
-
-  storage[0] = min;
-  storage[1] = posMin-1;
-  storage[2] = max;
-  //also return start
+void swap(int* a, int* b) {
+  // assuming a = 3 and b = 5
+ *b = *a + *b; // 8
+ *a = *b - *a; // 5
+ *b = *b - *a; // 3
 }
 
-void quickSort(int* array, int len, int min, int max) {
-  printf("Here: len %d : min %d : max %d\n", len, min, max);
-  sleep(1);
-  if (len <= 1) return;
-  int pivot = (int)(len/2); // middle-ish
-  int info[3];
-  partitionArray(info, array, pivot, min, max); // info = end position of small array
-  printf("Return of be like: %d, %d, %d\n", info[0], info[1], info[2]);
-  // with just the position of where posMin ends we should about be able to determine the rest
-  quickSort(array, info[1], info[0], info[1]); // smaller
-  quickSort(array, len-info[1], info[1]+1, info[2]); // bigger
+int partition(int* array, int min, int max) {
+  int posMinimum = min; int posMaximum = max;
+  int pivot = array[min];
+  while(posMinimum < posMaximum) {
+    while (array[posMinimum] <= pivot && posMinimum < max) {
+      posMinimum++;
+    }
+    while (array[posMaximum] > pivot && posMaximum > min) {
+      posMaximum--;
+    }
+    if (posMinimum < posMaximum) swap(&array[posMinimum], &array[posMaximum]);    
+  }
+  printf("\nmax is like: %d while pos max be like: %d\n",max, posMaximum);
+  printf("who was obliteratused %d %d\n", array[min], array[posMaximum]);
+  if (min != posMaximum) swap(&array[min], &array[posMaximum]);
+  printf("who was obliteratus %d %d\n", array[min], array[posMaximum]);
+  return posMaximum;
+}
+
+void quickSort(int* array, int min, int max) {
+  if (min < max) {
+    int pp = partition(array, min, max);
+    quickSort(array, min, pp-1);
+    quickSort(array, pp+1, max);
+  }
 }
 
 int main () {
@@ -96,7 +76,7 @@ int main () {
   */
   // order up 
   int test[11] = {5, 6, 2, 0, 62, 5, 402, 64, 1, 5, 7}; 
-  quickSort(test, 11, 0, 10);
+  quickSort(test, 0, 10);
   for (int i = 0; i < 11; i++) {
     printf("%d, ", test[i]);
   }
