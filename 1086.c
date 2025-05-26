@@ -14,42 +14,10 @@ made by Gabriel Loureiro Amorim Hugi
 */
 
 
-void swap(int* a, int* b) {
-  // assuming a = 3 and b = 5
- *b = *a + *b; // 8
- *a = *b - *a; // 5
- *b = *b - *a; // 3
-}
-
-int partition(int* array, int min, int max) {
-  int posMinimum = min; int posMaximum = max;
-  int pivot = array[min];
-  while(posMinimum < posMaximum) {
-    while (array[posMinimum] <= pivot && posMinimum < max) {
-      posMinimum++;
-    }
-    while (array[posMaximum] > pivot && posMaximum > min) {
-      posMaximum--;
-    }
-    if (posMinimum < posMaximum) swap(&array[posMinimum], &array[posMaximum]);    
-  }
-  if (min != posMaximum) swap(&array[min], &array[posMaximum]);
-  return posMaximum;
-}
-
-void quickSort(int* array, int min, int max) {
-  if (min < max) {
-    int pp = partition(array, min, max);
-    quickSort(array, min, pp-1);
-    quickSort(array, pp+1, max);
-  }
-}
-
-/*
-*************************
-*quicksort
-*************************
-*/
+void swap(int* a, int* b);
+int partition(int* array, int min, int max);
+void quickSort(int* array, int min, int max);
+void zeroe (int* o);
 
 int main () {
 
@@ -84,14 +52,81 @@ int main () {
   */
   // order up 
   quickSort(plankSizes, 0, numberOfPlanks-1);
-  //segment ballroom[0]
+
+
+  //segment ballroom[0], call it X
   // remember, can end at any point that the two planks be smaller than floor
-  for (int i = numberOfPlanks-1; i >= 0; i++) {
-    for (int i2 = numberOfPlanks-1; i2 >= 0; i2++) {
+  int completed = 0; // completed rows. If this == ballroom[1] at any point then we got a match
+  int taken[numberOfPlanks]; zeroe(taken, numberOfPlanks);
+  int planksUsedX = 0;
+
+  for (int i = 0; i < numberOfPlanks && completed != ballroom[1]; i++) {
+    for (int i2 = 0; i2 < numberOfPlanks && completed != ballroom[1]; i2++) {
+      if (i != i2 && taken[i] != 1 && taken[i2] != 1) {
         int res = plankSizes[i] + plankSizes[i2];
-        if (res < ballroom[0]);
+        if (res < ballroom[0]) break;
+        if (plankSizes[i] == ballroom[0]) {
+          completed++;
+          planksUsedX++;
+          taken[i] = 1;
+
+        }
+        if (plankSizes[i2] == ballroom[0]) {
+          completed++;
+          planksUsedX++;
+          taken[i2] = 1;
+
+        }
+        
+        if (res == ballroom[0]) {
+          completed++;
+          planksUsedX += 2;
+          taken[i] = 1;
+          taken[i2] = 1;
+        }
+      }
     }
+  }
+  if (completed == ballroom[1]) {
+
   }
 
   return 0;
+}
+
+void zeroe (int* o, int len) {
+  for (int i = 0; i < len; i++) {
+    o[i] = 0;
+  }
+} 
+
+void quickSort(int* array, int min, int max) {
+  if (min < max) {
+    int pp = partition(array, min, max);
+    quickSort(array, min, pp-1);
+    quickSort(array, pp+1, max);
+  }
+}
+
+int partition(int* array, int min, int max) {
+  int posMinimum = min; int posMaximum = max;
+  int pivot = array[min];
+  while(posMinimum < posMaximum) {
+    while (array[posMinimum] <= pivot && posMinimum < max) {
+      posMinimum++;
+    }
+    while (array[posMaximum] > pivot && posMaximum > min) {
+      posMaximum--;
+    }
+    if (posMinimum < posMaximum) swap(&array[posMinimum], &array[posMaximum]);    
+  }
+  if (min != posMaximum) swap(&array[min], &array[posMaximum]);
+  return posMaximum;
+}
+
+void swap(int* a, int* b) {
+  // assuming a = 3 and b = 5
+ *b = *a + *b; // 8
+ *a = *b - *a; // 5
+ *b = *b - *a; // 3
 }
