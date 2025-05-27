@@ -17,7 +17,7 @@ made by Gabriel Loureiro Amorim Hugi
 void swap(int* a, int* b);
 int partition(int* array, int min, int max);
 void quickSort(int* array, int min, int max);
-void zeroe (int* o);
+void zeroe (int* o, int len);
 
 int main () {
 
@@ -56,10 +56,11 @@ int main () {
 
   //segment ballroom[0], call it X
   // remember, can end at any point that the two planks be smaller than floor
+  int neededForX, neededForY; // ammount of planks needed to fill it up. if value is zero then not possible
   int completed = 0; // completed rows. If this == ballroom[1] at any point then we got a match
   int taken[numberOfPlanks]; zeroe(taken, numberOfPlanks);
-  int planksUsedX = 0;
-
+  int planksUsed = 0;
+  
   for (int i = 0; i < numberOfPlanks && completed != ballroom[1]; i++) {
     for (int i2 = 0; i2 < numberOfPlanks && completed != ballroom[1]; i2++) {
       if (i != i2 && taken[i] != 1 && taken[i2] != 1) {
@@ -67,29 +68,77 @@ int main () {
         if (res < ballroom[0]) break;
         if (plankSizes[i] == ballroom[0]) {
           completed++;
-          planksUsedX++;
+          planksUsed++;
           taken[i] = 1;
 
         }
         if (plankSizes[i2] == ballroom[0]) {
           completed++;
-          planksUsedX++;
+          planksUsed++;
           taken[i2] = 1;
 
         }
         
         if (res == ballroom[0]) {
           completed++;
-          planksUsedX += 2;
+          planksUsed += 2;
           taken[i] = 1;
           taken[i2] = 1;
         }
       }
     }
   }
-  if (completed == ballroom[1]) {
+  if (completed == ballroom[1]) neededForX = planksUsed;
+  else neededForX = 0;
 
+  // now y
+  //zeroing
+  completed = 0; planksUsed = 0; zeroe(taken, numberOfPlanks);
+
+  for (int i = 0; i < numberOfPlanks && completed != ballroom[0]; i++) {
+    for (int i2 = 0; i2 < numberOfPlanks && completed != ballroom[0]; i2++) {
+      if (i != i2 && taken[i] != 1 && taken[i2] != 1) {
+        int res = plankSizes[i] + plankSizes[i2];
+        if (res < ballroom[1]) break;
+        if (plankSizes[i] == ballroom[1]) {
+          completed++;
+          planksUsed++;
+          taken[i] = 1;
+
+        }
+        if (plankSizes[i2] == ballroom[1]) {
+          completed++;
+          planksUsed++;
+          taken[i2] = 1;
+
+        }
+        
+        if (res == ballroom[1]) {
+          completed++;
+          planksUsed += 2;
+          taken[i] = 1;
+          taken[i2] = 1;
+        }
+      }
+    }
   }
+  if (completed == ballroom[0]) neededForY = planksUsed;
+  else neededForY = 0;
+
+  // in conclusion
+
+  if (neededForX == 0 && neededForY == 0) {
+    printf("impossivel\n");
+    return 0;
+  }
+
+  if (neededForX < neededForY) {
+    printf("%d\n", neededForX);
+  }
+  else {
+    printf("%d\n", neededForY);
+  }
+
 
   return 0;
 }
