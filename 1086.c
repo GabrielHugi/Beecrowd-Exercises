@@ -88,7 +88,7 @@ int main () {
       }
     }
   }
-  if (completed == ballroom[1]) neededForX = planksUsed;
+  if (completed*100 == ballroom[1]) neededForX = planksUsed;
   else neededForX = 0;
 
   // now y
@@ -122,7 +122,7 @@ int main () {
       }
     }
   }
-  if (completed == ballroom[0]) neededForY = planksUsed;
+  if (completed*100 == ballroom[0]) neededForY = planksUsed;
   else neededForY = 0;
 
   // in conclusion
