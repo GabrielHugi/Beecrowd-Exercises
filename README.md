@@ -1,1 +1,1 @@
-I will add the other exercises that I have already done later, along with the date of completion
+Beecrowd exercises. Most of them were old but I will probably be making more
