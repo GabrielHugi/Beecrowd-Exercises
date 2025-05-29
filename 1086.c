@@ -69,6 +69,11 @@ int main () {
       and give the number of planks we used which we will also store
       NOTE THAT WE HAVE TO DO THIS FOR BOTH X FACING AND Y FACING BOARD
       ^ and then we compare the results and send the smaller or say its impossible
+
+      ------------------------------------------------------------------
+      I disregarded this plan when i learned about two pointer technique
+      keeping it here for sake of history
+      ------------------------------------------------------------------
       */
       quickSort(plankSizes, 0, numberOfPlanks-1);
 
@@ -79,37 +84,6 @@ int main () {
       int completed = 0; // completed rows in centimeters by the way. If this == ballroom[1] at any point then we got a match
       int taken[numberOfPlanks]; zeroe(taken, numberOfPlanks);
       int planksUsed = 0;
-      
-      /* old goofy approach
-      for (int i = 0; i < numberOfPlanks && completed != ballroom[1] && ballroom1Doable == 1; i++) {
-        for (int i2 = 0; i2 < numberOfPlanks && completed != ballroom[1]; i2++) {
-          if (i != i2 && taken[i] != 1 && taken[i2] != 1) {
-            int res = plankSizes[i] + plankSizes[i2];
-            if (res < ballroom[0]) break;
-            if (plankSizes[i] == ballroom[0]) {
-              completed+=plankWidth;
-              planksUsed++;
-              taken[i] = 1;
-
-            }
-            if (plankSizes[i2] == ballroom[0] && completed != ballroom[1]) {
-              // this completed check is because this if and the above work independently and this can potentially fill two rows at once which makes it "overflow" and not register as a win 
-              completed+=plankWidth;
-              planksUsed++;
-              taken[i2] = 1;
-
-            }
-            
-            if (res == ballroom[0]) {
-              completed+=plankWidth;
-              planksUsed += 2;
-              taken[i] = 1;
-              taken[i2] = 1;
-            }
-          }
-        }
-      }
-      */
       // sum up two point with a simple check for individual planks that can fill shit up
       for (int i = 0; i < numberOfPlanks && completed != ballroom[1]; i++) {
         if (plankSizes[i] == ballroom[0]) {
