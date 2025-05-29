@@ -1,5 +1,6 @@
-*.exe
-# this shit is for ignoring stuff with no extension (basically text files in linux)
+# this shit is for ignoring stuff with no extension
 *
 !/**/
 !*.*
+
+*.exe
